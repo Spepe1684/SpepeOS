@@ -32,6 +32,15 @@
   </head>
 
   <body style='font-family: "Slackside One", cursive; background-image: url("landscape.jp.jpg"); background-size: cover; background-attachment: fixed; background-position: center;'>
+    <div style="position: fixed; width: 100%; display: flex; backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.25); color: #fff; justify-content: space-between; top: 0; left: 0; height: 40px; align-items: center; z-index: 100;">
+      <p style="margin-left: 10px;">
+        SpepeOS
+      </p>
+      <p style="margin-right: 10px;">
+        <span id="current-time"></span>
+      </p>
+    </div>
+    
     <div class="text-background">
       <div style="border: solid; width: 250px; height: 300px; padding: 10px; margin-top: -40px; margin-left: -20px; border-radius: 15px; position: absolute; top: 50%; left: 50%; 
 transform: translate(-50%, -50%); background-image: url('b53c81b8c124eff047379eb272ec9a13.jpg'); background-size: cover; background-position: center; overflow: hidden;"> 
@@ -43,17 +52,20 @@ transform: translate(-50%, -50%); background-image: url('b53c81b8c124eff047379eb
         <h2>｡･:*:･ﾟ★,｡･:*:･ﾟ☆‧͙⁺˚*･༓☾</h2>
 
       </div>
-    
-  <div
-    style="position: absolute; width: 100%; display: flex; backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.25); color: #fff; justify-content: space-between; top: 0; left: 0; height: 40px; align-items: center;">
-    <p style="margin-left: 10px;">
-      SpepeOS
-    </p>
-    <p style="margin-right: 10px;">
-      6/21/2023 3:41 PM
-    </p>
-  </div>
+    </div>
 
+    <script>
+          function updateTime() {
+
+            var currentTime = new Date().toLocaleString();
+           document.getElementById("current-time").innerHTML = currentTime;
+           var timeText = document.querySelector("#timeElement");
+           timeText.innerHTML = currentTime
+     
+          }
+    setInterval(updateTime, 1000);
+
+    </script>
 </body>
 
 </html>
