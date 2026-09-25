@@ -57,6 +57,22 @@ function dragElement(element) {
 
 var welcomeScreen = document.querySelector("#welcome")
 
+function openWindow(element) {
+  element.style.display = "flex"
+}
+
 function closeWindow(element) {
   element.style.display = "none"
 }
+
+var welcomeScreenClose = document.querySelector("#welcomeclose")
+
+var welcomeScreenOpen = document.querySelector("#welcomeopen")
+
+welcomeScreenClose.addEventListener("click", function() {
+  closeWindow(welcomeScreen);
+});
+
+welcomeScreenOpen.addEventListener("click", function() {
+  openWindow(welcomeScreen);
+});
