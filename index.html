@@ -34,7 +34,7 @@
   <body style='font-family: "Slackside One", cursive; background-image: url("landscape.jp.jpg"); background-size: cover; background-attachment: fixed; background-position: center;'>
    
     <div style="position: fixed; width: 100%; display: flex; backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.25); color: #fff; justify-content: space-between; top: 0; left: 0; height: 40px; align-items: center; z-index: 100;">
-      <p style="margin-left: 10px;">
+      <p id="welcomeopen" style="margin-left: 10px; cursor: pointer;">
         SpepeOS
       </p>
       <p style="margin-right: 10px;">
@@ -47,8 +47,9 @@
         <div id="welcome"
           style="border: solid; display: flex; flex-direction: column; border-radius: 16px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); backdrop-filter: blur(4px); background-color: rgba(0, 0, 0, 0.125);">
           <div id="welcomeheader"
-            style="width: 100%; display: flex; align-items: center; cursor: move; justify-content: center; margin-top: 8px; font-family: 'Slackside One', cursive;">
-            <p style="margin: 0; color: #fff; font-weight: 500">Welcome</p>
+            style="width: 100%; display: flex; align-items: center; cursor: move; justify-content: space-between; margin-top: 8px; font-family: 'Slackside One', cursive; padding: 0 12px; box-sizing: border-box;">
+            <p style="margin: 0; color: #fff; font-weight: 500; flex: 1; text-align: center;">Welcome</p>
+            <p id="welcomeclose" style="margin: 0; width: 18px; height: 18px; border-radius: 50%; background: #ff4d4d; color: #fff; font-size: 12px; line-height: 18px; text-align: center; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center;">X</p>
           </div>
           <div style="background-color: #fff; margin: 6px; border-radius: 12px; width: 360px; padding: 16px; font-family: 'Slackside One', cursive; text-align: center;">
             <img src="b53c81b8c124eff047379eb272ec9a13.jpg" style="width: 64px; height: 64px; border-radius: 32px; object-fit: cover; display: block; margin: 0 auto;" />
