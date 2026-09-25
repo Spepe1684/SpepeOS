@@ -1,7 +1,7 @@
 
 
 // Make the DIV element draggable:
-dragElement(document.getElementById("SpepeOS"));
+dragElement(document.getElementById("welcome"));
 
 // Step 1: Define a function called `dragElement` that makes an HTML element draggable.
 function dragElement(element) {
@@ -53,4 +53,10 @@ function dragElement(element) {
     document.onmouseup = null;
     document.onmousemove = null;
   }
+}
+
+var welcomeScreen = document.querySelector("#welcome")
+
+function closeWindow(element) {
+  element.style.display = "none"
 }
