@@ -8,8 +8,8 @@ function dragElement(element) {
   // Step 2: Set up variables to keep track of the element's position.
   var initialX = 0;
   var initialY = 0;
-  var currentX = 0;
-  var currentY = 0;
+  var movementX = 0;
+  var movementY = 0;
 
   // Step 3: Check if there is a special header element associated with the draggable element.
   if (document.getElementById(element.id + "header")) {
@@ -38,14 +38,11 @@ function dragElement(element) {
   function dragElement(e) {
     e = e || window.event;
     e.preventDefault();
-    // Step 10: Calculate the new cursor position.
-    currentX = initialX - e.clientX;
-    currentY = initialY - e.clientY;
+    movementX += e.clientX - initialX;
+    movementY += e.clientY - initialY;
     initialX = e.clientX;
     initialY = e.clientY;
-    // Step 11: Update the element's new position by modifying its `top` and `left` CSS properties.
-    element.style.top = (element.offsetTop - currentY) + "px";
-    element.style.left = (element.offsetLeft - currentX) + "px";
+    element.style.translate = movementX + "px " + movementY + "px";
   }
 
   // Step 12: Define the `stopDragging` function to stop tracking mouse movement by removing the event listeners.
@@ -76,3 +73,33 @@ welcomeScreenClose.addEventListener("click", function() {
 welcomeScreenOpen.addEventListener("click", function() {
   openWindow(welcomeScreen);
 });
+
+var selectedIcon = undefined
+
+function selectIcon(element) {
+  element.classList.add("selected");
+  selectedIcon = element
+} 
+function deselectIcon(element) {
+  element.classList.remove("selected");
+  selectedIcon = undefined
+}
+
+function handleIconTap(element) {
+  if (element.classList.contains("selected")) {
+    deselectIcon(element)
+  } else {
+    if (selectedIcon) {
+      deselectIcon(selectedIcon)
+    }
+    selectIcon(element)
+  }
+}
+
+var desktopIcon = document.querySelector("#desktopApps > div")
+desktopIcon.addEventListener("click", function() {
+  handleIconTap(desktopIcon)
+})
+
+dragElement(document.querySelector("#notes"))
+
