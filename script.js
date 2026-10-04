@@ -10,6 +10,7 @@ function dragElement(element) {
   var initialY = 0;
   var movementX = 0;
   var movementY = 0;
+  var wasDragged = false;
 
   // Step 3: Check if there is a special header element associated with the draggable element.
   if (document.getElementById(element.id + "header")) {
@@ -25,7 +26,11 @@ function dragElement(element) {
   // Step 6: Define the `startDragging` function to capture the initial mouse position and set up event listeners.
   function startDragging(e) {
     e = e || window.event;
+    if (element.classList.contains("desktop-app") && !element.classList.contains("selected")) {
+      return;
+    }
     e.preventDefault();
+    wasDragged = false;
     // Step 7: Get the mouse cursor position at startup.
     initialX = e.clientX;
     initialY = e.clientY;
@@ -38,8 +43,13 @@ function dragElement(element) {
   function dragElement(e) {
     e = e || window.event;
     e.preventDefault();
-    movementX += e.clientX - initialX;
-    movementY += e.clientY - initialY;
+    var deltaX = e.clientX - initialX;
+    var deltaY = e.clientY - initialY;
+    if (Math.abs(deltaX) + Math.abs(deltaY) > 3) {
+      wasDragged = true;
+    }
+    movementX += deltaX;
+    movementY += deltaY;
     initialX = e.clientX;
     initialY = e.clientY;
     element.style.translate = movementX + "px " + movementY + "px";
@@ -49,6 +59,12 @@ function dragElement(element) {
   function stopDragging() {
     document.onmouseup = null;
     document.onmousemove = null;
+    if (wasDragged) {
+      element.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }, { once: true, capture: true });
+    }
   }
 }
 
@@ -74,6 +90,13 @@ welcomeScreenOpen.addEventListener("click", function() {
   openWindow(welcomeScreen);
 });
 
+var notesWindow = document.querySelector("#notes")
+var notesWindowClose = document.querySelector("#notesclose")
+
+notesWindowClose.addEventListener("click", function() {
+  closeWindow(notesWindow);
+});
+
 var selectedIcon = undefined
 
 function selectIcon(element) {
@@ -88,6 +111,7 @@ function deselectIcon(element) {
 function handleIconTap(element) {
   if (element.classList.contains("selected")) {
     deselectIcon(element)
+    openWindow(notesWindow)
   } else {
     if (selectedIcon) {
       deselectIcon(selectedIcon)
@@ -101,5 +125,6 @@ desktopIcon.addEventListener("click", function() {
   handleIconTap(desktopIcon)
 })
 
+dragElement(desktopIcon)
 dragElement(document.querySelector("#notes"))
 

@@ -129,6 +129,13 @@ h2 {
   transform: translate(-50%, -50%);
 }
 
+.notes-window {
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .window-header:active {
   cursor: grabbing;
 }
@@ -148,11 +155,15 @@ h2 {
   box-sizing: border-box;
 }
 
-#notes {
+.desktop-app {
   width: fit-content;
+  cursor: pointer;
+}
+
+.desktop-app.selected {
   cursor: grab;
 }
 
-#notes:active {
+.desktop-app.selected:active {
   cursor: grabbing;
 }
