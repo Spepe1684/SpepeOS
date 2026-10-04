@@ -78,6 +78,19 @@ function closeWindow(element) {
   element.style.display = "none"
 }
 
+var biggestIndex = 1;
+
+function handleWindowTap(element) {
+  biggestIndex += 1;
+  element.style.zIndex = biggestIndex;
+}
+
+function addWindowTapHandling(element) {
+  element.addEventListener("mousedown", function() {
+    handleWindowTap(element);
+  });
+}
+
 var welcomeScreenClose = document.querySelector("#welcomeclose")
 
 var welcomeScreenOpen = document.querySelector("#welcomeopen")
@@ -92,6 +105,9 @@ welcomeScreenOpen.addEventListener("click", function() {
 
 var notesWindow = document.querySelector("#notes")
 var notesWindowClose = document.querySelector("#notesclose")
+
+addWindowTapHandling(welcomeScreen);
+addWindowTapHandling(notesWindow);
 
 notesWindowClose.addEventListener("click", function() {
   closeWindow(notesWindow);
@@ -126,5 +142,5 @@ desktopIcon.addEventListener("click", function() {
 })
 
 dragElement(desktopIcon)
-dragElement(document.querySelector("#notes"))
+dragElement(notesWindow)
 
