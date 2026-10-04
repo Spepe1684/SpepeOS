@@ -1,83 +1,52 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Slackside+One&display=swap" rel="stylesheet">
-    <style>
-      .text-background {
-        color: #0B2D5C;
-        font-family: "Slackside One", cursive;
-        padding: 75px 50px 200px;
-        padding-left: 75px;
-        min-height: 300px;
-        text-align: left;
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
-        align-items: center;
-      }
-
-  
-
-      h1 {
-        font-size: 70px;
-        margin: 0;
-      }
-      h2 {  
-        font-size: 20px;
-        margin: 0;
-      }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpepeOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Slackside+One&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
 
-  <body style='font-family: "Slackside One", cursive; background-image: url("landscape.jp.jpg"); background-size: cover; background-attachment: fixed; background-position: center;'>
-   
-    <div style="position: fixed; width: 100%; display: flex; backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.25); color: #fff; justify-content: space-between; top: 0; left: 0; height: 40px; align-items: center; z-index: 100;">
-      <p id="welcomeopen" style="margin-left: 10px; cursor: pointer;">
-        SpepeOS
-      </p>
-      <p style="margin-right: 10px;">
-        <span id="current-time"></span>
-      </p>
+  <body style="background-image: url('landscape.jp.jpg'); background-size: cover; background-attachment: fixed; background-position: center;">
+    <div class="topbar">
+      <p id="welcomeopen" class="brand">SpepeOS</p>
+      <p class="time"><span id="current-time"></span></p>
     </div>
-    
+
     <div class="text-background">
       <div class="left-content" style="position: relative;">
-        <div id="welcome"
-          style="border: solid; display: flex; flex-direction: column; border-radius: 16px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); backdrop-filter: blur(4px); background-color: rgba(0, 0, 0, 0.125);">
-          <div id="welcomeheader"
-            style="width: 100%; display: flex; align-items: center; cursor: move; justify-content: space-between; margin-top: 8px; font-family: 'Slackside One', cursive; padding: 0 12px; box-sizing: border-box;">
-            <p style="margin: 0; color: #fff; font-weight: 500; flex: 1; text-align: center;">Welcome</p>
-            <p id="welcomeclose" style="margin: 0; width: 18px; height: 18px; border-radius: 50%; background: #ff4d4d; color: #fff; font-size: 12px; line-height: 18px; text-align: center; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center;">X</p>
+        <div id="welcome" class="window">
+          <div id="welcomeheader" class="window-header">
+            <p class="window-title">Welcome</p>
+            <button id="welcomeclose" class="window-close" type="button" aria-label="Close window">×</button>
           </div>
-          <div style="background-color: #fff; margin: 6px; border-radius: 12px; width: 360px; padding: 16px; font-family: 'Slackside One', cursive; text-align: center;">
-            <img src="b53c81b8c124eff047379eb272ec9a13.jpg" style="width: 64px; height: 64px; border-radius: 32px; object-fit: cover; display: block; margin: 0 auto;" />
-            <h1 style="margin: 4px; font-size: 36px; font-family: 'Slackside One', cursive;">SpepeOS</h1>
-            <h2 style="margin: 8px 0 0; font-size: 20px; font-family: 'Slackside One', cursive;">｡･:*:･ﾟ★,｡･:*:･ﾟ☆‧͙⁺˚*･༓☾</h2>
+
+          <div class="window-body">
+            <img src="b53c81b8c124eff047379eb272ec9a13.jpg" alt="SpepeOS icon" />
+            <h1>SpepeOS</h1>
+            <h2>｡･:*:･ﾟ★,｡･:*:･ﾟ☆‧͙⁺˚*･༓☾</h2>
           </div>
         </div>
       </div>
     </div>
 
+    <div id="desktopApps" style="padding-top: 24px; padding-left: 16px;">
+      <img src="notes.jpg" style="width: 64px; height: 64px; border-radius: 16px;">
+      <p style="margin: 0px; color: #fff; font-size: 25px;">Notes</p>
+    </div>
+
     <script src="script.js"></script>
     <script>
-          function updateTime() {
+      function updateTime() {
+        var currentTime = new Date().toLocaleString();
+        document.getElementById("current-time").innerHTML = currentTime;
+      }
 
-            var currentTime = new Date().toLocaleString();
-           document.getElementById("current-time").innerHTML = currentTime;
-           var timeText = document.querySelector("#timeElement");
-           timeText.innerHTML = currentTime
-     
-          }
-    setInterval(updateTime, 1000);
-
+      setInterval(updateTime, 1000);
+      updateTime();
     </script>
-</body>
-
-<head>
-  <script type="module" src="./script.js"></script>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-
+  </body>
 </html>
