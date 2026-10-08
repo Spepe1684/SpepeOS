@@ -134,10 +134,67 @@ h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: min(760px, calc(100vw - 24px));
+}
+
+.notes-body {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 16px;
+  width: auto;
+  height: min(480px, calc(100vh - 100px));
+  min-height: 260px;
+  text-align: left;
+}
+
+.notes-list {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.notes-list p {
+  margin: 0;
+}
+
+.note-name {
+  font-weight: 700;
+}
+
+.note-date {
+  font-size: 12px;
+}
+
+.note-content {
+  min-width: 0;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.note-content p:first-child {
+  margin-top: 0;
+}
+
+.note-content blockquote {
+  background-color: #f9f9f9;
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 12px;
 }
 
 .window-header:active {
   cursor: grabbing;
+}
+
+@media (max-width: 560px) {
+  .notes-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .notes-list {
+    padding: 10px 12px;
+  }
 }
 
 .closebutton {

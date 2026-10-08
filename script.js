@@ -1,8 +1,5 @@
 
 
-// Make the DIV element draggable:
-dragElement(document.getElementById("welcome"));
-
 // Step 1: Define a function called `dragElement` that makes an HTML element draggable.
 function dragElement(element) {
   // Step 2: Set up variables to keep track of the element's position.
@@ -70,10 +67,6 @@ function dragElement(element) {
 
 var welcomeScreen = document.querySelector("#welcome")
 
-function openWindow(element) {
-  element.style.display = "flex"
-}
-
 function closeWindow(element) {
   element.style.display = "none"
 }
@@ -91,27 +84,37 @@ function addWindowTapHandling(element) {
   });
 }
 
-var welcomeScreenClose = document.querySelector("#welcomeclose")
+function openWindow(element) {
+  element.style.display = "flex";
+  biggestIndex++;  // Increment biggestIndex by 1
+  element.style.zIndex = biggestIndex;
+}
+
+function makeClosable(elementName) {
+  var screen = document.querySelector("#" + elementName)
+  var closeButton = document.querySelector("#" + elementName + "close")
+  closeButton.addEventListener("click", function() {
+    closeWindow(screen)
+  })
+}
+
+function initializeWindow(elementName) {
+  var screen = document.querySelector("#" + elementName)
+  addWindowTapHandling(screen)
+  makeClosable(elementName)
+  dragElement(screen)
+}
 
 var welcomeScreenOpen = document.querySelector("#welcomeopen")
-
-welcomeScreenClose.addEventListener("click", function() {
-  closeWindow(welcomeScreen);
-});
 
 welcomeScreenOpen.addEventListener("click", function() {
   openWindow(welcomeScreen);
 });
 
 var notesWindow = document.querySelector("#notes")
-var notesWindowClose = document.querySelector("#notesclose")
 
-addWindowTapHandling(welcomeScreen);
-addWindowTapHandling(notesWindow);
-
-notesWindowClose.addEventListener("click", function() {
-  closeWindow(notesWindow);
-});
+initializeWindow("welcome")
+initializeWindow("notes")
 
 var selectedIcon = undefined
 
@@ -142,5 +145,4 @@ desktopIcon.addEventListener("click", function() {
 })
 
 dragElement(desktopIcon)
-dragElement(notesWindow)
 
