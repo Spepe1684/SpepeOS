@@ -116,6 +116,172 @@ var notesWindow = document.querySelector("#notes")
 initializeWindow("welcome")
 initializeWindow("notes")
 
+var notesStorageKey = "spepeos-notes"
+var notesList = document.querySelector("#notesList")
+var addNoteButton = document.querySelector("#addNote")
+var noteTitle = document.querySelector("#noteTitle")
+var noteDate = document.querySelector("#noteDate")
+var noteContent = document.querySelector("#noteContent")
+var notesError = document.querySelector("#notesError")
+var defaultNote = {
+  id: "welcome",
+  title: "Welcome",
+  date: "10/08/2026",
+  content: noteContent.innerHTML
+}
+
+function showNotesError(message) {
+  notesError.textContent = message
+  notesError.hidden = !message
+}
+
+function sanitizeNoteContent(html) {
+  var template = document.createElement("template")
+  template.innerHTML = html
+
+  function copySafeNodes(nodes) {
+    var fragment = document.createDocumentFragment()
+    nodes.forEach(function(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        fragment.appendChild(document.createTextNode(node.textContent))
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        var allowedTags = ["P", "BR", "STRONG", "B", "EM", "I", "DEL", "INS", "BLOCKQUOTE"]
+        var children = copySafeNodes(Array.from(node.childNodes))
+        if (allowedTags.includes(node.tagName)) {
+          var safeElement = document.createElement(node.tagName.toLowerCase())
+          safeElement.appendChild(children)
+          fragment.appendChild(safeElement)
+        } else {
+          fragment.appendChild(children)
+        }
+      }
+    })
+    return fragment
+  }
+
+  var safeContent = document.createElement("div")
+  safeContent.appendChild(copySafeNodes(Array.from(template.content.childNodes)))
+  return safeContent.innerHTML
+}
+
+function createNoteId() {
+  return "note-" + Date.now() + "-" + Math.random().toString(36).slice(2)
+}
+
+var savedNotes
+try {
+  var savedNotesValue = localStorage.getItem(notesStorageKey)
+  savedNotes = savedNotesValue ? JSON.parse(savedNotesValue) : null
+} catch (error) {
+  showNotesError("Saved notes could not be loaded from this browser.")
+  savedNotes = null
+}
+
+var notes = savedNotes && Array.isArray(savedNotes.notes) &&
+  savedNotes.notes.length > 0 &&
+  savedNotes.notes.every(function(note) {
+    return note && typeof note.id === "string" && typeof note.title === "string" &&
+      typeof note.date === "string" && typeof note.content === "string"
+  })
+  ? savedNotes.notes
+  : [defaultNote]
+if (savedNotesValue && notes[0] === defaultNote) {
+  showNotesError("Saved notes data is invalid. Your original note is available; saving will replace the invalid data.")
+}
+var selectedNoteId = savedNotes && notes.some(function(note) {
+  return note.id === savedNotes.selectedNoteId
+}) ? savedNotes.selectedNoteId : notes[0].id
+
+function getSelectedNote() {
+  return notes.find(function(note) {
+    return note.id === selectedNoteId
+  })
+}
+
+function saveNotes() {
+  try {
+    localStorage.setItem(notesStorageKey, JSON.stringify({
+      notes: notes,
+      selectedNoteId: selectedNoteId
+    }))
+    showNotesError("")
+  } catch (error) {
+    showNotesError("Notes could not be saved. Check this browser's storage settings.")
+  }
+}
+
+function renderNotes() {
+  notesList.replaceChildren()
+  notes.forEach(function(note) {
+    var button = document.createElement("button")
+    button.type = "button"
+    button.className = "note-list-item" + (note.id === selectedNoteId ? " selected" : "")
+    button.setAttribute("aria-pressed", note.id === selectedNoteId)
+
+    var title = document.createElement("span")
+    title.className = "note-list-title"
+    title.textContent = note.title || "Untitled"
+
+    var date = document.createElement("span")
+    date.className = "note-list-date"
+    date.textContent = note.date
+
+    button.append(title, date)
+    button.addEventListener("click", function() {
+      updateCurrentNote()
+      selectedNoteId = note.id
+      displaySelectedNote()
+    })
+    notesList.appendChild(button)
+  })
+}
+
+function displaySelectedNote() {
+  var note = getSelectedNote()
+  if (!note) {
+    return
+  }
+  noteTitle.value = note.title
+  noteDate.textContent = note.date
+  noteContent.innerHTML = sanitizeNoteContent(note.content)
+  renderNotes()
+}
+
+function updateCurrentNote() {
+  var note = getSelectedNote()
+  if (!note) {
+    return
+  }
+  note.title = noteTitle.value.trim() || "Untitled"
+  note.content = sanitizeNoteContent(noteContent.innerHTML)
+  renderNotes()
+  saveNotes()
+}
+
+function addNote() {
+  updateCurrentNote()
+  var today = new Date().toLocaleDateString()
+  var note = {
+    id: createNoteId(),
+    title: "Untitled",
+    date: today,
+    content: "<p></p>"
+  }
+  notes.unshift(note)
+  selectedNoteId = note.id
+  displaySelectedNote()
+  noteTitle.focus()
+  saveNotes()
+}
+
+if (savedNotesValue === null && notes.length === 1 && notes[0] === defaultNote) {
+  notes[0].content = sanitizeNoteContent(defaultNote.content)
+}
+displaySelectedNote()
+addNoteButton.addEventListener("click", addNote)
+noteTitle.addEventListener("input", updateCurrentNote)
+noteContent.addEventListener("input", updateCurrentNote)
+
 var selectedIcon = undefined
 
 function selectIcon(element) {
@@ -145,4 +311,3 @@ desktopIcon.addEventListener("click", function() {
 })
 
 dragElement(desktopIcon)
-
