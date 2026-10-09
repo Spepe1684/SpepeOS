@@ -115,6 +115,7 @@ var notesWindow = document.querySelector("#notes")
 
 initializeWindow("welcome")
 initializeWindow("notes")
+initializeWindow("gallery")
 
 var notesStorageKey = "spepeos-notes"
 var notesList = document.querySelector("#notesList")
@@ -282,6 +283,15 @@ addNoteButton.addEventListener("click", addNote)
 noteTitle.addEventListener("input", updateCurrentNote)
 noteContent.addEventListener("input", updateCurrentNote)
 
+var photos = [
+  {
+    src: "toro.jpg",
+    title: "Toro",
+    description: "A photo of Toro",
+    alt: "toro sitting outside :)"
+  }
+]
+
 var selectedIcon = undefined
 
 function selectIcon(element) {
@@ -293,10 +303,10 @@ function deselectIcon(element) {
   selectedIcon = undefined
 }
 
-function handleIconTap(element) {
+function handleIconTap(element, targetWindow) {
   if (element.classList.contains("selected")) {
     deselectIcon(element)
-    openWindow(notesWindow)
+    openWindow(targetWindow)
   } else {
     if (selectedIcon) {
       deselectIcon(selectedIcon)
@@ -305,24 +315,37 @@ function handleIconTap(element) {
   }
 }
 
-var photos = [
-  {
-    src:
-    title:
-    description:
-    alt:
-  },
-  {
-    src:
-    title:
-    description:
-    al
-  }
-]
+var photos = []
 
-var desktopIcon = document.querySelector("#desktopApps > div")
-desktopIcon.addEventListener("click", function() {
-  handleIconTap(desktopIcon)
+var galleryPhotos = document.querySelector("#galleryPhotos")
+
+photos.forEach(function(photo){
+  var card = document.createElement("article")
+  card.className = "photo-card"
+
+  var image = document.createElement("img")
+  image.src = photo.src
+  image.alt = photo.alt
+
+  var title = document.createElement("h3")
+  title.textContent = photo.title
+
+  var description = document.createElement("h3")
+  description.textContent = photo.description
+
+  card.append(image, title, description)
+  galleryPhotos.appendChild(card)
+
 })
 
-dragElement(desktopIcon)
+var desktopIcons = [
+  { element: document.querySelector("#notesIcon"), window: notesWindow },
+  { element: document.querySelector("#galleryIcon"), window: document.querySelector("#gallery") }
+]
+
+desktopIcons.forEach(function(icon) {
+  icon.element.addEventListener("click", function() {
+    handleIconTap(icon.element, icon.window)
+  })
+  dragElement(icon.element)
+})

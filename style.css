@@ -339,6 +339,12 @@ h2 {
   cursor: pointer;
 }
 
+.desktop-apps {
+  display: flex;
+  gap: 24px;
+  padding: 24px 16px;
+}
+
 .desktop-app.selected {
   cursor: grab;
 }
