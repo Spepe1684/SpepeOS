@@ -283,14 +283,7 @@ addNoteButton.addEventListener("click", addNote)
 noteTitle.addEventListener("input", updateCurrentNote)
 noteContent.addEventListener("input", updateCurrentNote)
 
-var photos = [
-  {
-    src: "toro.jpg",
-    title: "Toro",
-    description: "A photo of Toro",
-    alt: "toro sitting outside :)"
-  }
-]
+
 
 var selectedIcon = undefined
 
@@ -315,7 +308,20 @@ function handleIconTap(element, targetWindow) {
   }
 }
 
-var photos = []
+var photos = [
+  {
+    src: "images/toro1.jpg",
+    title: "Toro",
+    description: "A photo of Toro at the supermarket!",
+    alt: "toro at store"
+  },
+  {
+    src: "images/toro2.jpg",
+    title: "Toro",
+    description: "A photo of Toro sitting on a train!",
+    alt: "toro in train"
+  }
+]
 
 var galleryPhotos = document.querySelector("#galleryPhotos")
 
