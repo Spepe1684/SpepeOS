@@ -60,7 +60,7 @@ h2 {
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 16px;
-  background: rgba(0, 0, 0, 0.125);
+  background: rgba(126, 212, 153, 0.125);
   backdrop-filter: blur(4px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -105,7 +105,7 @@ h2 {
 }
 
 .window-body {
-  background-color: #fff;
+  background-color: #eaeeeb;
   margin: 6px;
   border-radius: 12px;
   width: 360px;
@@ -158,7 +158,7 @@ h2 {
   border: 0;
   border-radius: 8px;
   padding: 8px 12px;
-  background: #e9e9e9;
+  background: #80becd;
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -176,7 +176,7 @@ h2 {
   border: 0;
   border-radius: 8px;
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: #66a9c9;
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -284,6 +284,39 @@ h2 {
   .note-list-item {
     min-width: 120px;
   }
+}
+
+.gallery-window {
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(760px, calc(100vw-24px));
+}
+
+.gallery-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+  padding: 16px;
+  margin: 6px;
+  border-radius: 12px;
+  background: white;
+}
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.photo-card h3,
+.photo-card p {
+  margin: 8px 0 0;
 }
 
 .closebutton {

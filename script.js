@@ -305,6 +305,21 @@ function handleIconTap(element) {
   }
 }
 
+var photos = [
+  {
+    src:
+    title:
+    description:
+    alt:
+  },
+  {
+    src:
+    title:
+    description:
+    al
+  }
+]
+
 var desktopIcon = document.querySelector("#desktopApps > div")
 desktopIcon.addEventListener("click", function() {
   handleIconTap(desktopIcon)
