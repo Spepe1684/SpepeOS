@@ -1,6 +1,9 @@
 # SpepeOS
 My own custom webpage in the form of an OS that contains multiple draggable windows featuring information about me, especially my love of the character Toro the cat. Made as part of my project for Hack Club's StarDance Challenge.
 
+
+![SpepeOS screenshot](<Screenshot 2026-10-28 182636.png>)
+
 It features Toro Inoue the cat a lot!
 Other features:
  - A welcome screen, showing the name of the OS as well as Toro's first feature. You can close it and open it again by clicking the top bar.
